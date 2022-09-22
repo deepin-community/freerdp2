@@ -1,0 +1,38 @@
+Description: Keep DumpThreadHandles as a symbol even if WITH_DEBUG_THREADS is OFF.
+Author: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+Forwarded: https://github.com/FreeRDP/FreeRDP/pull/7708
+
+--- a/winpr/libwinpr/thread/thread.c
++++ b/winpr/libwinpr/thread/thread.c
+@@ -783,9 +783,9 @@
+ 	return TRUE;
+ }
+ 
+-#if defined(WITH_DEBUG_THREADS)
+ VOID DumpThreadHandles(void)
+ {
++#if defined(WITH_DEBUG_THREADS)
+ 	char** msg;
+ 	size_t used, i;
+ 	void* stack = winpr_backtrace(20);
+@@ -846,6 +846,6 @@
+ 	}
+ 
+ 	WLog_DBG(TAG, "---------------- End Dumping thread handles -------------");
+-}
+ #endif
++}
+ #endif
+--- a/winpr/include/winpr/thread.h
++++ b/winpr/include/winpr/thread.h
+@@ -248,10 +248,7 @@
+ 	/* CommandLineToArgvA is not present in the original Windows API, WinPR always exports it */
+ 
+ 	WINPR_API LPSTR* CommandLineToArgvA(LPCSTR lpCmdLine, int* pNumArgs);
+-
+-#if defined(WITH_DEBUG_THREADS)
+ 	WINPR_API VOID DumpThreadHandles(void);
+-#endif
+ 
+ #ifdef __cplusplus
+ }

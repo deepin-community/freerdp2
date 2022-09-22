@@ -1,0 +1,44 @@
+Description: add sunway support
+Author: Miao Changwei <miaochangwei@uniontech.com>
+
+---
+Last-Update: 2022-05-19
+
+--- freerdp2-2.3.0+dfsg1.orig/winpr/include/winpr/platform.h
++++ freerdp2-2.3.0+dfsg1/winpr/include/winpr/platform.h
+@@ -125,6 +125,14 @@
+ #endif
+ #endif
+ 
++/* SW64 (_M_SW64) */
++
++#if defined(__sw_64) || defined(__sw_64__)
++#ifndef _M_SW64
++#define _M_SW64 1
++#endif
++#endif
++
+ /**
+  * Operating Systems:
+  * http://sourceforge.net/p/predef/wiki/OperatingSystems/
+--- freerdp2-2.3.0+dfsg1.orig/winpr/include/winpr/sysinfo.h
++++ freerdp2-2.3.0+dfsg1/winpr/include/winpr/sysinfo.h
+@@ -47,6 +47,7 @@ extern "C"
+ #define PROCESSOR_ARCHITECTURE_NEUTRAL 11
+ #define PROCESSOR_ARCHITECTURE_ARM64 12
+ #define PROCESSOR_ARCHITECTURE_MIPS64 13
++#define PROCESSOR_ARCHITECTURE_SW64 14
+ #define PROCESSOR_ARCHITECTURE_UNKNOWN 0xFFFF
+ 
+ #define PROCESSOR_INTEL_386 386
+--- freerdp2-2.3.0+dfsg1.orig/winpr/libwinpr/sysinfo/sysinfo.c
++++ freerdp2-2.3.0+dfsg1/winpr/libwinpr/sysinfo/sysinfo.c
+@@ -122,6 +122,8 @@ static DWORD GetProcessorArchitecture(vo
+ 	cpuArch = PROCESSOR_ARCHITECTURE_PPC;
+ #elif defined(_M_ALPHA)
+ 	cpuArch = PROCESSOR_ARCHITECTURE_ALPHA;
++#elif defined(_M_SW64)
++	cpuArch = PROCESSOR_ARCHITECTURE_SW64;
+ #endif
+ 	return cpuArch;
+ }
