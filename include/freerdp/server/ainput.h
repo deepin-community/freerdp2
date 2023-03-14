@@ -22,6 +22,7 @@
 #define FREERDP_CHANNEL_AINPUT_SERVER_H
 
 #include <freerdp/channels/wtsvc.h>
+#include <freerdp/channels/ainput.h>
 
 typedef enum AINPUT_SERVER_OPEN_RESULT
 {
@@ -32,6 +33,8 @@ typedef enum AINPUT_SERVER_OPEN_RESULT
 } AINPUT_SERVER_OPEN_RESULT;
 
 typedef struct _ainput_server_context ainput_server_context;
+
+typedef BOOL (*psAInputChannelIdAssigned)(ainput_server_context* context, UINT32 channelId);
 
 typedef UINT (*psAInputServerInitialize)(ainput_server_context* context, BOOL externalThread);
 typedef UINT (*psAInputServerPoll)(ainput_server_context* context);
@@ -97,6 +100,11 @@ struct _ainput_server_context
 	psAInputServerMouseEvent MouseEvent;
 
 	rdpContext* rdpcontext;
+
+	/**
+	 * Callback, when the channel got its id assigned.
+	 */
+	psAInputChannelIdAssigned ChannelIdAssigned;
 };
 
 #ifdef __cplusplus

@@ -251,6 +251,9 @@ typedef enum
 #define LB_TARGET_NET_ADDRESSES 0x00000800
 #define LB_CLIENT_TSV_URL 0x00001000
 #define LB_SERVER_TSV_CAPABLE 0x00002000
+#define LB_PASSWORD_IS_PK_ENCRYPTED 0x00004000
+#define LB_REDIRECTION_GUID 0x00008000
+#define LB_TARGET_CERTIFICATE 0x00010000
 
 #define LB_PASSWORD_MAX_LENGTH 512
 
@@ -656,6 +659,8 @@ typedef struct _RDPDR_PARALLEL RDPDR_PARALLEL;
 #define FreeRDP_NtlmSamFile (1103)
 #define FreeRDP_FIPSMode (1104)
 #define FreeRDP_TlsSecLevel (1105)
+#define FreeRDP_TLSMinVersion (1106)
+#define FreeRDP_TLSMaxVersion (1107)
 #define FreeRDP_MstscCookieMode (1152)
 #define FreeRDP_CookieMaxLength (1153)
 #define FreeRDP_PreconnectionId (1154)
@@ -679,6 +684,10 @@ typedef struct _RDPDR_PARALLEL RDPDR_PARALLEL;
 #define FreeRDP_RedirectionAcceptedCert (1231)
 #define FreeRDP_RedirectionAcceptedCertLength (1232)
 #define FreeRDP_RedirectionPreferType (1233)
+#define FreeRDP_RedirectionGuid (1234)
+#define FreeRDP_RedirectionGuidLength (1235)
+#define FreeRDP_RedirectionTargetCertificate (1236)
+#define FreeRDP_RedirectionTargetCertificateLength (1237)
 #define FreeRDP_Password51 (1280)
 #define FreeRDP_Password51Length (1281)
 #define FreeRDP_SmartcardLogon (1282)
@@ -1108,7 +1117,9 @@ struct rdp_settings
 	ALIGN64 char* NtlmSamFile;                 /* 1103 */
 	ALIGN64 BOOL FIPSMode;                     /* 1104 */
 	ALIGN64 UINT32 TlsSecLevel;                /* 1105 */
-	UINT64 padding1152[1152 - 1106];           /* 1106 */
+	ALIGN64 UINT16 TLSMinVersion;              /* 1106 */
+	ALIGN64 UINT16 TLSMaxVersion;              /* 1107 */
+	UINT64 padding1152[1152 - 1108];           /* 1108 */
 
 	/* Connection Cookie */
 	ALIGN64 BOOL MstscCookieMode;      /* 1152 */
@@ -1137,7 +1148,11 @@ struct rdp_settings
 	ALIGN64 char* RedirectionAcceptedCert;        /* 1231 */
 	ALIGN64 UINT32 RedirectionAcceptedCertLength; /* 1232 */
 	ALIGN64 UINT32 RedirectionPreferType;         /* 1233 */
-	UINT64 padding1280[1280 - 1234];              /* 1234 */
+	ALIGN64 BYTE* RedirectionGuid;                /* 1234 */
+	ALIGN64 UINT32 RedirectionGuidLength;         /* 1235 */
+	ALIGN64 BYTE* RedirectionTargetCertificate;   /* 1236 */
+	ALIGN64 UINT32 RedirectionTargetCertificateLength; /* 1237 */
+	UINT64 padding1280[1280 - 1238];                   /* 1238 */
 
 	/**
 	 * Security
@@ -1631,6 +1646,8 @@ extern "C"
 	FREERDP_API void freerdp_dynamic_channel_collection_free(rdpSettings* settings);
 
 	FREERDP_API void freerdp_target_net_addresses_free(rdpSettings* settings);
+	FREERDP_API BOOL freerdp_target_net_addresses_copy(rdpSettings* settings, char** addresses,
+	                                                   UINT32 count);
 
 	FREERDP_API void freerdp_performance_flags_make(rdpSettings* settings);
 	FREERDP_API void freerdp_performance_flags_split(rdpSettings* settings);
@@ -1704,6 +1721,9 @@ extern "C"
 	FREERDP_API SSIZE_T freerdp_settings_get_type_for_name(const char* value);
 	FREERDP_API SSIZE_T freerdp_settings_get_type_for_key(size_t key);
 	FREERDP_API const char* freerdp_settings_get_name_for_key(size_t key);
+
+	FREERDP_API char* freerdp_rail_support_flags_to_string(UINT32 flags, char* buffer,
+	                                                       size_t length);
 
 #ifdef __cplusplus
 }

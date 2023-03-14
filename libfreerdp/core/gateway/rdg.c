@@ -257,20 +257,18 @@ static const char* flags_to_string(UINT32 flags, const t_flag_mapping* map, size
 {
 	size_t x = 0;
 	static char buffer[1024] = { 0 };
-	char fields[12];
-	memset(buffer, 0, sizeof(buffer));
+	char fields[12] = { 0 };
 
 	for (x = 0; x < elements; x++)
 	{
-		if (buffer[0] != '\0')
-			strcat(buffer, "|");
+		const t_flag_mapping* cur = &map[x];
 
-		if ((map[x].code & flags) != 0)
-			strcat(buffer, map[x].name);
+		if ((cur->code & flags) != 0)
+			winpr_str_append(cur->name, buffer, sizeof(buffer), "|");
 	}
 
 	sprintf_s(fields, ARRAYSIZE(fields), " [%04" PRIx32 "]", flags);
-	strcat(buffer, fields);
+	winpr_str_append(fields, buffer, sizeof(buffer), NULL);
 	return buffer;
 }
 
@@ -314,7 +312,8 @@ static BOOL rdg_read_http_unicode_string(wStream* s, const WCHAR** string, UINT1
 	/* Read length of the string */
 	if (rem < 4)
 	{
-		WLog_ERR(TAG, "[%s]: Could not read stream length, only have % " PRIuz " bytes", rem);
+		WLog_ERR(TAG, "[%s]: Could not read stream length, only have % " PRIuz " bytes",
+		         __FUNCTION__, rem);
 		return FALSE;
 	}
 	Stream_Read_UINT16(s, strLenBytes);
@@ -327,7 +326,7 @@ static BOOL rdg_read_http_unicode_string(wStream* s, const WCHAR** string, UINT1
 	{
 		WLog_ERR(TAG,
 		         "[%s]: Could not read stream data, only have % " PRIuz " bytes, expected %" PRIu16,
-		         rem - 4, strLenBytes);
+		         __FUNCTION__, rem - 4, strLenBytes);
 		return FALSE;
 	}
 

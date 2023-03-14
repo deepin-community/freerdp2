@@ -9,7 +9,7 @@ Files-Excluded:
  client/Mac
  client/Windows
  cmake/ConfigOptionsAndroid.cmake
- cmake/iOSToolchain.cmake
+ cmake/ios.toolchain.cmake
  docs/FreeRDP.vsd
  docs/README.android
  docs/README.ios
@@ -102,6 +102,7 @@ Files: .clang-format
  channels/rail/ChannelOptions.cmake
  channels/rdp2tcp/ChannelOptions.cmake
  channels/rdpdr/ChannelOptions.cmake
+ channels/rdpecam/ChannelOptions.cmake
  channels/rdpei/ChannelOptions.cmake
  channels/rdpgfx/ChannelOptions.cmake
  channels/rdpsnd/ChannelOptions.cmake
@@ -109,6 +110,7 @@ Files: .clang-format
  channels/serial/ChannelOptions.cmake
  channels/smartcard/ChannelOptions.cmake
  channels/sshagent/ChannelOptions.cmake
+ channels/telemetry/ChannelOptions.cmake
  channels/tsmf/ChannelOptions.cmake
  channels/urbdrc/ChannelOptions.cmake
  channels/video/ChannelOptions.cmake
@@ -304,6 +306,8 @@ Files: .clang-format
  winpr/libwinpr/crt/test/TestTypes.c
  winpr/libwinpr/crt/test/TestUnicodeConversion.c
  winpr/libwinpr/crypto/ModuleOptions.cmake
+ winpr/libwinpr/crypto/hmac_md5.c
+ winpr/libwinpr/crypto/hmac_md5.h
  winpr/libwinpr/crypto/test/CMakeLists.txt
  winpr/libwinpr/crypto/test/TestCryptoCertEnumCertificatesInStore.c
  winpr/libwinpr/crypto/test/TestCryptoCipher.c
@@ -535,8 +539,7 @@ Comment:
  No license header present. Assuming license from LICENSE file.
  No explicit copyright notice.
 
-Files:
- channels/CMakeLists.txt
+Files: channels/CMakeLists.txt
  channels/audin/CMakeLists.txt
  channels/audin/client/CMakeLists.txt
  channels/audin/client/alsa/CMakeLists.txt
@@ -856,6 +859,7 @@ Files:
  winpr/include/winpr/credui.h
  winpr/include/winpr/crt.h
  winpr/include/winpr/crypto.h
+ winpr/include/winpr/custom-crypto.h
  winpr/include/winpr/dsparse.h
  winpr/include/winpr/endian.h
  winpr/include/winpr/error.h
@@ -892,6 +896,7 @@ Files:
  winpr/include/winpr/thread.h
  winpr/include/winpr/timezone.h
  winpr/include/winpr/tools/makecert.h
+ winpr/include/winpr/wincrypt.h
  winpr/include/winpr/windows.h
  winpr/include/winpr/winhttp.h
  winpr/include/winpr/winpr.h
@@ -1109,6 +1114,90 @@ Copyright: 2009, Marc-Andre Moreau <marcandre.moreau@gmail.com>
   2015, Marc-Andre Moreau <marcandre.moreau@gmail.com>
 License: Apache-2.0
 
+Files: channels/audin/client/mac/CMakeLists.txt
+ channels/audin/client/mac/audin_mac.m
+ channels/printer/client/cups/CMakeLists.txt
+ channels/printer/client/win/CMakeLists.txt
+ channels/rdpsnd/client/fake/CMakeLists.txt
+ channels/rdpsnd/client/fake/rdpsnd_fake.c
+ channels/rdpsnd/client/proxy/CMakeLists.txt
+ channels/rdpsnd/common/CMakeLists.txt
+ channels/rdpsnd/common/rdpsnd_common.h
+ channels/tsmf/client/gstreamer/tsmf_X11.c
+ channels/tsmf/client/gstreamer/tsmf_platform.h
+ channels/urbdrc/common/CMakeLists.txt
+ channels/urbdrc/common/urbdrc_helpers.c
+ channels/urbdrc/common/urbdrc_helpers.h
+ client/Sample/tf_channels.c
+ client/Sample/tf_channels.h
+ client/Sample/tf_freerdp.h
+ client/Wayland/wlf_cliprdr.c
+ client/Wayland/wlf_cliprdr.h
+ client/Wayland/wlf_disp.c
+ client/Wayland/wlf_disp.h
+ client/Wayland/wlf_pointer.c
+ client/Wayland/wlf_pointer.h
+ cmake/Findsoxr.cmake
+ include/freerdp/channels/tsmf.h
+ include/freerdp/channels/urbdrc.h
+ include/freerdp/server/server-common.h
+ include/freerdp/utils/cliprdr_utils.h
+ include/freerdp/utils/string.h
+ libfreerdp/cache/bitmap.h
+ libfreerdp/cache/brush.h
+ libfreerdp/cache/cache.h
+ libfreerdp/cache/glyph.h
+ libfreerdp/cache/palette.h
+ libfreerdp/cache/pointer.h
+ libfreerdp/codec/dsp.h
+ libfreerdp/codec/dsp_ffmpeg.c
+ libfreerdp/codec/dsp_ffmpeg.h
+ libfreerdp/core/errbase.c
+ libfreerdp/core/errconnect.c
+ libfreerdp/core/settings.h
+ libfreerdp/core/utils.c
+ libfreerdp/core/utils.h
+ libfreerdp/crypto/test/TestKnownHosts.c
+ libfreerdp/gdi/test/helpers.c
+ libfreerdp/gdi/test/helpers.h
+ libfreerdp/utils/string.c
+ scripts/test-scard.cpp
+ winpr/include/winpr/assert.h
+ winpr/include/winpr/debug.h
+ winpr/libwinpr/nt/ntstatus.c
+ winpr/libwinpr/sysinfo/cpufeatures/CMakeLists.txt
+ winpr/libwinpr/utils/corkscrew/debug.c
+ winpr/libwinpr/utils/corkscrew/debug.h
+ winpr/libwinpr/utils/debug.c
+ winpr/libwinpr/utils/execinfo/debug.c
+ winpr/libwinpr/utils/execinfo/debug.h
+ winpr/libwinpr/utils/unwind/debug.c
+ winpr/libwinpr/utils/unwind/debug.h
+ winpr/libwinpr/utils/windows/debug.c
+ winpr/libwinpr/utils/windows/debug.h
+ winpr/libwinpr/utils/winpr.c
+Copyright: 2013, Armin Novak <armin.novak@thincast.com>
+  2013, Thincast Technologies GmbH
+  2014, Armin Novak <armin.novak@thincast.com>
+  2014, Thincast Technologies GmbH
+  2015, Armin Novak <armin.novak@thincast.com>
+  2015, Thincast Technologies GmbH
+  2016, Armin Novak <armin.novak@thincast.com>
+  2016, Thincast Technologies GmbH
+  2017, Armin Novak <armin.novak@thincast.com>
+  2017, Thincast Technologies GmbH
+  2018, Armin Novak <armin.novak@thincast.com>
+  2018, Thincast Technologies GmbH
+  2019, Armin Novak <armin.novak@thincast.com>
+  2019, Thincast Technologies GmbH
+  2020, Armin Novak <armin.novak@thincast.com>
+  2020, Thincast Technologies GmbH
+  2021, Armin Novak <armin.novak@thincast.com>
+  2021, Thincast Technologies GmbH
+  2022, Armin Novak <armin.novak@thincast.com>
+  2022, Thincast Technologies GmbH
+License: Apache-2.0
+
 Files: client/Sample/tf_freerdp.c
  client/X11/xf_gdi.h
  client/X11/xf_gfx.c
@@ -1170,84 +1259,14 @@ Copyright: 2010, Marc-Andre Moreau <marcandre.moreau@gmail.com>
   2014, Marc-Andre Moreau <marcandre.moreau@gmail.com>
   2016, 2018, Armin Novak <armin.novak@thincast.com>
   2016, 2018, Thincast Technologies GmbH
-  2016, Thincast Technologies GmbH
-  2017, Armin Novak <armin.novak@thincast.com>
-  2017, Thincast Technologies GmbH
-  2019, Armin Novak <armin.novak@thincast.com>
-  2019, Thincast Technologies GmbH
-  2020, Armin Novak <armin.novak@thincast.com>
-  2020, Thincast Technologies GmbH
-License: Apache-2.0
-
-Files: channels/audin/client/mac/CMakeLists.txt
- channels/audin/client/mac/audin_mac.m
- channels/printer/client/cups/CMakeLists.txt
- channels/printer/client/win/CMakeLists.txt
- channels/rdpsnd/client/fake/CMakeLists.txt
- channels/rdpsnd/client/fake/rdpsnd_fake.c
- channels/rdpsnd/client/proxy/CMakeLists.txt
- channels/rdpsnd/common/CMakeLists.txt
- channels/rdpsnd/common/rdpsnd_common.h
- channels/tsmf/client/gstreamer/tsmf_X11.c
- channels/tsmf/client/gstreamer/tsmf_platform.h
- channels/urbdrc/common/CMakeLists.txt
- channels/urbdrc/common/urbdrc_helpers.c
- channels/urbdrc/common/urbdrc_helpers.h
- client/Sample/tf_channels.c
- client/Sample/tf_channels.h
- client/Sample/tf_freerdp.h
- client/Wayland/wlf_cliprdr.c
- client/Wayland/wlf_cliprdr.h
- client/Wayland/wlf_disp.c
- client/Wayland/wlf_disp.h
- client/Wayland/wlf_pointer.c
- client/Wayland/wlf_pointer.h
- cmake/Findsoxr.cmake
- include/freerdp/channels/tsmf.h
- include/freerdp/channels/urbdrc.h
- include/freerdp/server/server-common.h
- libfreerdp/cache/bitmap.h
- libfreerdp/cache/brush.h
- libfreerdp/cache/cache.h
- libfreerdp/cache/glyph.h
- libfreerdp/cache/palette.h
- libfreerdp/cache/pointer.h
- libfreerdp/codec/dsp.h
- libfreerdp/codec/dsp_ffmpeg.c
- libfreerdp/codec/dsp_ffmpeg.h
- libfreerdp/core/errbase.c
- libfreerdp/core/errconnect.c
- libfreerdp/core/settings.h
- libfreerdp/core/utils.c
- libfreerdp/core/utils.h
- libfreerdp/crypto/test/TestKnownHosts.c
- libfreerdp/gdi/test/helpers.c
- libfreerdp/gdi/test/helpers.h
- scripts/test-scard.cpp
- winpr/include/winpr/assert.h
- winpr/include/winpr/debug.h
- winpr/libwinpr/nt/ntstatus.c
- winpr/libwinpr/sysinfo/cpufeatures/CMakeLists.txt
- winpr/libwinpr/utils/debug.c
- winpr/libwinpr/utils/winpr.c
-Copyright: 2013, Armin Novak <armin.novak@thincast.com>
-  2013, Thincast Technologies GmbH
-  2014, Armin Novak <armin.novak@thincast.com>
-  2014, Thincast Technologies GmbH
-  2015, Armin Novak <armin.novak@thincast.com>
-  2015, Thincast Technologies GmbH
   2016, Armin Novak <armin.novak@thincast.com>
   2016, Thincast Technologies GmbH
   2017, Armin Novak <armin.novak@thincast.com>
   2017, Thincast Technologies GmbH
-  2018, Armin Novak <armin.novak@thincast.com>
-  2018, Thincast Technologies GmbH
   2019, Armin Novak <armin.novak@thincast.com>
   2019, Thincast Technologies GmbH
   2020, Armin Novak <armin.novak@thincast.com>
   2020, Thincast Technologies GmbH
-  2021, Armin Novak <armin.novak@thincast.com>
-  2021, Thincast Technologies GmbH
 License: Apache-2.0
 
 Files: channels/audin/client/audin_main.h
@@ -1608,6 +1627,21 @@ Copyright: 2012, Corey Clayton <can.of.tuna@gmail.com>
   2013, Corey Clayton <can.of.tuna@gmail.com>
 License: Apache-2.0
 
+Files: channels/rdpecam/CMakeLists.txt
+ channels/rdpecam/server/CMakeLists.txt
+ channels/rdpecam/server/camera_device_enumerator_main.c
+ channels/rdpecam/server/camera_device_main.c
+ channels/telemetry/CMakeLists.txt
+ channels/telemetry/server/CMakeLists.txt
+ channels/telemetry/server/telemetry_main.c
+ include/freerdp/channels/rdpecam.h
+ include/freerdp/channels/telemetry.h
+ include/freerdp/server/rdpecam-enumerator.h
+ include/freerdp/server/rdpecam.h
+ include/freerdp/server/telemetry.h
+Copyright: 2022, Pascal Nowack <Pascal.Nowack@gmx.de>
+License: Apache-2.0
+
 Files: cmake/FindX11.cmake
  cmake/FindXKBFile.cmake
  cmake/FindXShm.cmake
@@ -1879,6 +1913,13 @@ Files: channels/audin/client/opensles/opensl_io.c
  channels/rdpsnd/client/opensles/opensl_io.h
 Copyright: 2012, Victor Lazzarini
 License: BSD-3-clause
+
+Files: winpr/libwinpr/crypto/md4.c
+ winpr/libwinpr/crypto/md4.h
+ winpr/libwinpr/crypto/md5.c
+ winpr/libwinpr/crypto/md5.h
+Copyright: 2001, Alexander Peslyak and it is hereby released to the
+License: public-domain
 
 Files: include/freerdp/codec/rfx.h
  libfreerdp/codec/nsc_encode.c
@@ -2256,6 +2297,12 @@ Copyright: 2011, Anthony Tong <atong@trustedcs.com>
   2015, DI (FH) Martin Haimberger <martin.haimberger@thincast.com>
   2015, Thincast Technologies GmbH
   2016, David PHAM-VAN <d.phamvan@inuvika.com>
+License: Apache-2.0
+
+Files: libfreerdp/utils/cliprdr_utils.c
+Copyright: 2013, Marc-Andre Moreau <marcandre.moreau@gmail.com>
+  2022, Armin Novak <anovak@thincast.com
+  2022, Thincast Technologies GmbH
 License: Apache-2.0
 
 Files: channels/printer/client/printer_main.c
@@ -2971,7 +3018,7 @@ License: BSD-3-clause
 
 Files: debian/*
 Copyright: 2015-2018, Bernhard Miklautz <bernhard.miklautz@thincast.com>
-  2016, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+  2016-2022, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
 License: Apache-2.0 or BSD-2-clause or BSD-3-clause or BSL-1.0 or Expat or ISC or X11 or zlib/libpng or public-domain
 
 License: Apache-2.0
