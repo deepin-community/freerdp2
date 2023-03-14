@@ -9,9 +9,12 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  WTSChannelGetHandleById@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  WTSChannelGetHandleByName@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  WTSChannelGetId@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ WTSChannelGetIdByHandle@Base 2.8.0+dfsg1
  WTSChannelGetName@Base 2.1.0+dfsg1
+ WTSChannelGetOptions@Base 2.8.0+dfsg1
  WTSChannelSetHandleById@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  WTSChannelSetHandleByName@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ WTSGetAcceptedChannelNames@Base 2.8.0+dfsg1
  WTSIsChannelJoinedById@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  WTSIsChannelJoinedByName@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  WTSVirtualChannelManagerCheckFileDescriptor@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
@@ -19,6 +22,7 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  WTSVirtualChannelManagerGetEventHandle@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  WTSVirtualChannelManagerGetFileDescriptor@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  WTSVirtualChannelManagerIsChannelJoined@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ WTSVirtualChannelManagerSetDVCCreationCallback@Base 2.8.0+dfsg1
  _ber_sizeof_length@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  _der_skip_length@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  _er_skip_length@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
@@ -92,6 +96,9 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  clear_context_new@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  clear_context_reset@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  clear_decompress@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ cliprdr_parse_file_list@Base 2.8.0+dfsg1
+ cliprdr_serialize_file_list@Base 2.8.0+dfsg1
+ cliprdr_serialize_file_list_ex@Base 2.8.0+dfsg1
  codecs_free@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  codecs_new@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  connectErrorCode@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
@@ -104,6 +111,7 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  crypto_cert_get_dns_names@Base 2.0.0~git20181120.1.e21b72c95+dfsg1
  crypto_cert_get_email@Base 2.0.0~git20181120.1.e21b72c95+dfsg1
  crypto_cert_get_public_key@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ crypto_cert_get_signature_alg@Base 2.10.0+dfsg1
  crypto_cert_get_upn@Base 2.0.0~git20181120.1.e21b72c95+dfsg1
  crypto_cert_hash@Base 2.1.0+dfsg1
  crypto_cert_issuer@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
@@ -261,6 +269,7 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  freerdp_get_param_string@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_get_param_uint32@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_get_param_uint64@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ freerdp_get_state@Base 2.9.0+dfsg1
  freerdp_get_stats@Base 2.1.0+dfsg1
  freerdp_get_system_locale_id@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_get_system_locale_name_from_id@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
@@ -309,9 +318,12 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  freerdp_peer_context_new@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_peer_free@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_peer_new@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ freerdp_peer_os_major_type_string@Base 2.8.0+dfsg1
+ freerdp_peer_os_minor_type_string@Base 2.8.0+dfsg1
  freerdp_performance_flags_make@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_performance_flags_split@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_planar_switch_bgr@Base 2.3.0+dfsg1
+ freerdp_rail_support_flags_to_string@Base 2.8.0+dfsg1
  freerdp_reconnect@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_register_addin_provider@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_send_error_info@Base 2.1.0+dfsg1
@@ -352,10 +364,12 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  freerdp_settings_set_uint64@Base 2.1.0+dfsg1
  freerdp_settings_set_value_for_name@Base 2.1.0+dfsg1
  freerdp_shall_disconnect@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ freerdp_state_string@Base 2.9.0+dfsg1
  freerdp_static_channel_clone@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_static_channel_collection_add@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_static_channel_collection_find@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_static_channel_collection_free@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ freerdp_target_net_addresses_copy@Base 2.10.0+dfsg1
  freerdp_target_net_addresses_free@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  freerdp_update_gateway_usage_method@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  gdi_BitBlt@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
@@ -538,6 +552,7 @@ libfreerdp2.so.2 libfreerdp2-2 #MINVER#
  progressive_decompress_ex@Base 2.3.0+dfsg1
  progressive_delete_surface_context@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  rail_read_unicode_string@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
+ rdp_redirection_flags_to_string@Base 2.10.0+dfsg1
  rectangle_is_empty@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  rectangles_equal@Base 2.0.0~git20160317.1.75ae3f5+dfsg1
  rectangles_intersection@Base 2.0.0~git20160317.1.75ae3f5+dfsg1

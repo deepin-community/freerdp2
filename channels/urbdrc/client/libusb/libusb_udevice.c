@@ -237,7 +237,7 @@ static void async_transfer_user_data_free(ASYNC_TRANSFER_USER_DATA* user_data)
 	}
 }
 
-static void func_iso_callback(struct libusb_transfer* transfer)
+static void LIBUSB_CALL func_iso_callback(struct libusb_transfer* transfer)
 {
 	ASYNC_TRANSFER_USER_DATA* user_data = (ASYNC_TRANSFER_USER_DATA*)transfer->user_data;
 	const UINT32 streamID = stream_id_from_buffer(transfer);
@@ -336,7 +336,7 @@ static const LIBUSB_ENDPOINT_DESCEIPTOR* func_get_ep_desc(LIBUSB_CONFIG_DESCRIPT
 	return NULL;
 }
 
-static void func_bulk_transfer_cb(struct libusb_transfer* transfer)
+static void LIBUSB_CALL func_bulk_transfer_cb(struct libusb_transfer* transfer)
 {
 	ASYNC_TRANSFER_USER_DATA* user_data;
 	uint32_t streamID;
@@ -1221,12 +1221,18 @@ static int libusb_udev_isoch_transfer(IUDEVICE* idev, URBDRC_CHANNEL_CALLBACK* c
 	if (!Buffer)
 		Stream_Seek(user_data->data, (NumberOfPackets * 12));
 
-	iso_packet_size = BufferSize / NumberOfPackets;
-	iso_transfer = libusb_alloc_transfer(NumberOfPackets);
+	if (NumberOfPackets > 0)
+	{
+		iso_packet_size = BufferSize / NumberOfPackets;
+		iso_transfer = libusb_alloc_transfer((int)NumberOfPackets);
+	}
 
 	if (iso_transfer == NULL)
 	{
-		WLog_Print(urbdrc->log, WLOG_ERROR, "Error: libusb_alloc_transfer.");
+		WLog_Print(urbdrc->log, WLOG_ERROR,
+		           "Error: libusb_alloc_transfer [NumberOfPackets=%" PRIu32 ", BufferSize=%" PRIu32
+		           " ]",
+		           NumberOfPackets, BufferSize);
 		async_transfer_user_data_free(user_data);
 		return -1;
 	}

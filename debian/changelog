@@ -1,14 +1,83 @@
-freerdp2 (2.7.0+dfsg1.1-1+dde) UNRELEASED; urgency=medium
+freerdp2 (2.10.0+dfsg1-1) unstable; urgency=medium
 
-  * update
+  * New upstream release.
+    - Fix android build scripts, use CMake from SDK.
+    - Fix connection negotiation with mstsc/msrdc.
+    - [ntlm]: use rfc5929 binding hash algorithm.
+    - [channels,printer] Fixed reference counting.
+    - Fix uwac pixman.
+    - Fix Rdp security.
+    - [client,x11] Detect key autorepeat.
+    - [build] add channel path to RPATH.
+    - Fix build with BUILTIN_CHANNELS=OFF.
+    - revert changes so that the osmajortype/osminortype is not overwritten.
+    - [uwac] do not use iso C functions.
+    - [winpr,sam] fix inalid NULL arguments.
+    - Fix incompatible function pointer types.
+    - Ignore data PDUs for DVCs that were not opened successfully.
+    - [channel,urbdrc] fix type of usb hotplug callback.
+    - Extended info enforce limits.
+    - [core] add missing redirection fields.
+  * debian/control:
+    + Bump Standards-Version: to 4.6.2. No changes needed.
+  * debian/copyright:
+    + Update copyright attributions.
+    + Update auto-generated copyright.in file.
+  * debian/libfreerdp2-2.symbols:
+    + Update symbols.
 
- -- Debian Remote Maintainers <debian-remote@lists.debian.org>  Mon, 25 Jul 2022 17:42:34 +0800
+ -- Mike Gabriel <sunweaver@debian.org>  Sun, 26 Feb 2023 21:59:16 +0100
 
-freerdp2 (2.7.0+dfsg1.1-1+dde) unstable; urgency=medium
+freerdp2 (2.9.0+dfsg1-1) unstable; urgency=medium
 
-  * Add sunway support.
+  * New upstream release. (Closes: #1024511).
+    - CVE-2022-39316: Resolve out of bound read in ZGFX decoder component.
+    - CVE-2022-39317: Resolve missing a range check for input offset index
+      in ZGFX decoder.
+    - CVE-2022-39318: Resolve missing input validation in `urbdrc` channel.
+    - CVE-2022-39319: Resolve missing input length validation in the `urbdrc`
+      channel
+    - CVE-2022-39320: Resolve attempting integer addition on too narrow types
+      leading to allocation of a buffer too small holding the data written.
+    - CVE-2022-39347: Resolve missing path canonicalization and base path check
+      for `drive` channel.
+    - CVE-2022-41877: Resolv missing input length validation in `drive` channel.
+    - Test if packages' executables can be run without 'undefined symbol:
+      winpr_PathMakePath' error. (Closes: #1024758).
+  * debian/copyright:
+    + Update auto-generated copyright.in file.
+    + Update copyright attributions.
+  * debian/*.symbols:
+    + Update .symbols files.
 
- -- Miao Changwei <miaochangwei@uniontech.com>  Thu, 19 May 2022 21:06:08 +0800
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 28 Nov 2022 09:51:57 +0100
+
+freerdp2 (2.8.1+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #1021659).
+    - Fixes CVE-2022-39282, CVE-2022-39283.
+  * debian/patches:
+    + Drop 1001_amend-DumpThreadHandles-inclusion.patch. Resolved upstream.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Wed, 12 Oct 2022 23:26:31 +0200
+
+freerdp2 (2.8.0+dfsg1-1) unstable; urgency=medium
+
+  * New upstream version. (Closes: #1016491).
+  * debian/control:
+    + Bump Standards-Version: to 4.6.1. No changes needed.
+  * debian/copyright:
+    + Update auto-generated copyright.in file.
+    + Update copyright attributions.
+  * debian/patches:
+    + Drop 1001_keep-symbol-DumpThreadHandles-if-debugging-is-disabled.patch.
+      Similar solution applied upstream, but only partially, it seems.
+    + Add 1001_amend-DumpThreadHandles-inclusion.patch. Amend missing adjustment
+      in thread.h.
+  * debian/*.symbols:
+    + Update .symbols files for 2.8.0.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Tue, 16 Aug 2022 23:19:34 +0200
 
 freerdp2 (2.7.0+dfsg1-1) unstable; urgency=medium
 

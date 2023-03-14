@@ -511,12 +511,7 @@ static BOOL filter_by_class(uint8_t bDeviceClass, uint8_t bDeviceSubClass)
 
 static BOOL append(char* dst, size_t length, const char* src)
 {
-	size_t slen = strlen(src);
-	size_t dlen = strnlen(dst, length);
-	if (dlen + slen >= length)
-		return FALSE;
-	strcat(dst, src);
-	return TRUE;
+	return winpr_str_append(src, dst, length, NULL);
 }
 
 static BOOL device_is_filtered(struct libusb_device* dev,
@@ -586,8 +581,8 @@ static BOOL device_is_filtered(struct libusb_device* dev,
 	return filtered;
 }
 
-static int hotplug_callback(struct libusb_context* ctx, struct libusb_device* dev,
-                            libusb_hotplug_event event, void* user_data)
+static int LIBUSB_CALL hotplug_callback(struct libusb_context* ctx, struct libusb_device* dev,
+                                        libusb_hotplug_event event, void* user_data)
 {
 	VID_PID_PAIR pair;
 	struct libusb_device_descriptor desc;
@@ -865,7 +860,7 @@ static BOOL poll_libusb_events(UDEVMAN* udevman)
 	return rc > 0;
 }
 
-static DWORD poll_thread(LPVOID lpThreadParameter)
+static DWORD WINAPI poll_thread(LPVOID lpThreadParameter)
 {
 	libusb_hotplug_callback_handle handle;
 	UDEVMAN* udevman = (UDEVMAN*)lpThreadParameter;
